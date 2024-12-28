@@ -8,13 +8,18 @@ const listingSchema = new Schema({
     } ,
     description: String,
     image: {
-        type: String,
-        default:"https://unsplash.com/photos/a-body-of-water-with-a-city-in-the-background-dHaI_U2qSZ0",
-        set: (v) => v === "" ? "https://unsplash.com/photos/a-body-of-water-with-a-city-in-the-background-dHaI_U2qSZ0": v,
-    },
+        url: String,
+        filename: String,
+       },
     price: Number,
     location: String,
     country: String,
+    reviews: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Review",
+      },
+    ],
 });
 
 const Listing = mongoose.model("Listing", listingSchema);
