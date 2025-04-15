@@ -21,19 +21,22 @@ router
 
 
 
-
 //New Route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
-// router.put("/:id", isLoggedIn, isOwner, upload.single('listing[image]'), validateListing, wrapAsync(async (req, res) => {
-//   let { id } = req.params;
-//   console.log("Received Data:", req.body.listing); 
-  
-//   let updatedListing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-  
-//   console.log("Updated Listing:", updatedListing); // Debug log
-//   res.redirect(`/listings/${id}`);
-// }));
+router
+.route("/:id")
+.get (wrapAsync(listingController.showListing))
+.put(
+  isLoggedIn,
+  isOwner,
+  upload.single('listing[image]'),
+  validateListing, wrapAsync(listingController.updateListing)
+  )
+  .delete(
+    isLoggedIn,
+    isOwner,
+    wrapAsync(listingController.destroyListing));
 
   //edit route 
  router.get("/:id/edit", isLoggedIn, isOwner,
